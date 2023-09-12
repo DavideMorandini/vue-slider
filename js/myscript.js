@@ -44,4 +44,62 @@ const { createApp } = Vue
         }
       },
 
-     
+      methods: {
+        nextImg() {
+            if(this.mainIndex >= this.slides.length - 1)
+            {
+                this.mainIndex = 0;
+
+            } else {
+                this.mainIndex++;
+            }
+        },
+
+        prevImg() {
+            if(this.mainIndex == 0)
+            {
+                this.mainIndex = this.slides.length - 1;
+
+            } else {
+                this.mainIndex--;
+            }
+        },
+
+        activeImg(index) {
+            this.mainIndex = index;
+        },
+
+        stopSlide(hover) {
+            if (!hover) {
+                this.startSlide(false);
+
+            }else {
+                clearInterval(this.timer);            
+            }
+        },
+
+        startSlide(hover) {
+            if(!hover){
+                this.timer = setInterval(() => {
+                    if( this.mainIndex >= this.slides.length - 1) {
+                       this.mainIndex = 0;
+
+                    } else {
+                       this.mainIndex++;
+                    }     
+                }, 3000);
+            }
+        }
+    },
+
+    mounted() {
+        this.timer = setInterval(() => {
+            if(this.mainIndex >= this.slides.length - 1) {
+               this.mainIndex = 0;
+
+            } else {
+               this.mainIndex++;
+            }
+        }, 3000);
+    }
+  }).mount('#app')
